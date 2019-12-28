@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
+    <title>注册</title>
     <style>
         * {
             padding: 0;
@@ -76,7 +76,7 @@
 
             <nav>
                 <ul>
-                    <li>首页</li>
+                    <li><a href="/">首页</a></li>
                     <li><a href="./login.html">登录</a></li>
                     <li><a href="./register.html">注册</a></li>
                 </ul>
@@ -86,16 +86,49 @@
 
     <section>
         <div class="container">
-            Nodejs 简易框架
+            <h3>注册</h3>
+            <form id="form" action="/register" method="POST" enctype="multipart/form-data">
+                用户名称：<input type="text" name="username"></br>
+                用户密码：<input type="password" name="password"></br>
+                用户头像：<input type="file" name="file" id="" ></br>
+                <input type="submit" value="注册"></br>
+            </form>
         </div>
     </section>
     <footer>
+
         <div class="container">
             <div class="copyright">
                 CopyRight 2019-2020 rufeike
             </div>
         </div>
     </footer>
+
+    <script>
+        window.onload = ()=>{
+            let form = document.getElementById('form');
+            form.onsubmit = ()=>{
+                let formData = new FormData(form);
+                let xhr = new XMLHttpRequest();
+                xhr.open(form.method,form.action,true);
+                xhr.send(formData);
+                xhr.onreadystatechange = ()=>{
+                    if(xhr.readyState==4){
+                        if(xhr.status>=200&&xhr.status<300||xhr.status==304){
+                            let res = JSON.parse(xhr.responseText);
+                            console.log(res);
+                        }else{
+                            alert('请求服务器失败');
+                        }
+
+                    }
+                }
+
+                return false;
+            }
+
+        }
+    </script>
 </body>
 
 </html>

@@ -17,6 +17,8 @@ const {HTTP_PORT,HTTP_ROOT,HTTP_UPLOAD} = require('../config');//自定义配置
 const router = require('./router');//自定义路由模块
 
 http.createServer((req,res)=>{
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Headers',"x-requested-with, content-type");
     //1.解析数据-GET/POST/FILE
     let {pathname,query} = url.parse(req.url,true);
     if(req.method=='POST'){
@@ -64,6 +66,9 @@ http.createServer((req,res)=>{
             })
         }
     }else{
+        //默认'/'访问HTTP_ROOT/static/index.html
+        pathname = pathname=='/'?'/index.html':pathname;
+        
         //找路由
         handle(req.method,pathname,query,{},{});
 
@@ -81,7 +86,7 @@ http.createServer((req,res)=>{
         let fn = router.findRouter(method,url);
         if(!fn){//文件请求
             let filepath = HTTP_ROOT+pathname;//指定查找文件的目录
-            console.log(filepath);
+            // console.log(filepath);
             fs.stat(filepath,(err,stat)=>{
                 if(err){
                     res.writeHeader(404);
