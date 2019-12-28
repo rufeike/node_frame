@@ -6,6 +6,7 @@
  * @Email: rufeike@163.com
  -->
 #node原生简易框架1.0
+> 使用原生nodejs简单实现http服务框架，了解http服务器流程，功能简单，仅供学习参考！
 
 ##  目录机构
 
